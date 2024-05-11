@@ -1,27 +1,37 @@
 [
   {
-    "name": "Sal",
-    "email": "sal@hotmail.com",
-    "password": "password12345"
+    "customer_id": 7,
+    "first_name": "Sal",
+    "last_name": "Lopez",
+    "email_address": "sal@hotmail.com",
+    "passwords": "password12345"
   },
   {
-    "name": "Lernantino",
-    "email": "lernantino@gmail.com",
-    "password": "password123456"
+    "customer_id": 8,
+    "first_name": "Lernantino",
+    "last_name": "Decaprio",
+    "email_address": "lernantino@gmail.com",
+    "passwords": "password123456"
   },
   {
-    "name": "Amiko",
-    "email": "amiko2k20@aol.com",
-    "password": "password1234567"
+    "customer_id": 9,
+    "first_name": "Amiko",
+    "last_name": "Luo",
+    "email_address": "amiko2k20@aol.com",
+    "passwords": "password1234567"
   },
   {
-    "name": "Jordan",
-    "email": "jordan99@msn.com",
-    "password": "password12345678"
+    "customer_id": 10,
+    "first_name": "Jordan",
+    "last_name": "River",
+    "email_address": "jordan99@msn.com",
+    "passwords": "password12345678"
   },
   {
-    "name": "Blake",
-    "email": "the_blake@yahoo.com",
-    "password": "password123456789"
+    "customer_id": 11,
+    "first_name": "Blake",
+    "last_name": "Lesley",
+    "email_address": "the_blake@yahoo.com",
+    "passwords": "password123456789"
   }
 ]

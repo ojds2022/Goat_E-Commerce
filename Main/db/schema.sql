@@ -8,7 +8,7 @@ CREATE TABLE Customers (
   last_name VARCHAR(30) NOT NULL,
   email_address VARCHAR(30) NOT NULL,
   passwords VARCHAR(255) NOT NULL, 
-  session_id VARCHAR(255) Not NUll,
+  session_id VARCHAR(255) NOT NUll,
   created_date DATETIME DEFAULT CURRENT_TIMESTAMP NOT NULL
 );
 

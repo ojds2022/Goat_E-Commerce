@@ -89,6 +89,7 @@ header {
   display: flex;
   justify-content: center;
   align-items: center;
+}
 
 .wrapper .form-box {
   width: 100%;
@@ -101,4 +102,50 @@ header {
   text-align: center;
 }
 
+.input-box {
+  position: relative;
+  width: 100%;
+  height: 50px;
+  border-bottom: 2px solid black;
+  margin: 30px 0;
+}
+
+.input-box label {
+  position: absolute;
+  top: 50%;
+  left: 5px;
+  transform: translateY(-50%);
+  font-size: 1em;
+  color: black;
+  font-weight: 500;
+  pointer-events: none;
+  /* slows the placeholder label movement when user clicks on input field */
+  transition: .5s;
+}
+
+/* causes placeholder labels to move up when user clicks on input field */
+.input-box input:focus~label, 
+.input-box input:valid~label {
+  top: -5px;
+}
+
+.input-box input { /* blends in input boxes and expands to size of the container */
+  width: 100%;
+  height: 100%;
+  background: transparent;
+  border: none;
+  outline: none;
+  /* css below in this class adjusts the sizing display of the user inputted data in the input fields and prevents overlap with icons */
+  font-size: 1em;
+  color: black;
+  font-weight: 600;
+  padding: 0 35px 0 5px;
+}
+
+.input-box .icon {  /* moves icons to the right */
+  position: absolute;
+  right: 8px;
+  font-size: 1.2em;
+  color: black;
+  line-height: 57px;
 }

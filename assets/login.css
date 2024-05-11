@@ -5,6 +5,16 @@
   font-family: 'Poppins', 'san-serif';
 }
 
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background: rgb(227, 190, 122);
+  background-size: cover;
+  background-position: center;
+}
+
 header {
   position: fixed;
   top: 0;
@@ -58,4 +68,37 @@ header {
   color: white;
   font-weight: 500;
   margin-left: 40px;
+  transition: .5s;
+}
+
+.btnLogin:hover {
+  background: white;
+  color: black;
+}
+
+.wrapper {
+  position: relative;
+  width: 400px;
+  height: 440px;
+  background: transparent;
+  border: 2px solid white;
+  border-radius: 20px;
+  /* backdrop-filter: blur(20px); cool effect to blur the background of login popup */
+  background-color: lightgray;
+  box-shadow: 0 0 30px rgba(0, 0, 0, .5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+.wrapper .form-box {
+  width: 100%;
+  padding: 40px;
+}
+
+.form-box h2 {
+  font-size: 2em;
+  color: black;
+  text-align: center;
+}
+
 }

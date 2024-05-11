@@ -3,6 +3,6 @@ const homeRoutes = require('./homeRoutes');
 const productDetailRoutes = require('./productDetailRoutes')
 
 router.use('/', homeRoutes);
-router.use('/productDetailRoutes', productDetailRoutes);
+router.use('/productDetails', productDetailRoutes);
 
 module.exports = router;

@@ -1,11 +1,11 @@
 const router = require('express').Router();
-const { Items } = require('../models');
+const { Product } = require('../models');
 
 
 router.get('/',  async (req, res) => {
   try {
-    const itemData = await Items.findAll({
-      order: [['name', 'ASC']],
+    const itemData = await Product.findAll({
+      order: [['product_name', 'ASC']],
     });
     const Item = itemData.map((project) => project.get({ plain: true }));
     console.log(Item);

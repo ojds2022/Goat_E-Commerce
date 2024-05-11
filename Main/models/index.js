@@ -1,4 +1,4 @@
-const Items = require('./Items');
+const Product = require('./Product');
 
-module.exports = { Items };
+module.exports = { Product };
     

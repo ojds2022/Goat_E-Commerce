@@ -12,8 +12,6 @@ const transactionmainData = require('./transactionmain.json');
 const seedDatabase = async () => {
   await sequelize.sync({ force: true });
 
-  await seedProduct();
-
   await Product.bulkCreate(productData, {
     individualHooks: true,
     returning: true,

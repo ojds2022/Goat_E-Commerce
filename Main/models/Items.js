@@ -20,7 +20,7 @@ Product.init(
       allowNull: false,
     },
     product_url:{
-      type: DataTypes.STRING(50),
+      type: DataTypes.STRING(100),
       allowNull: false,
     },
     price: {

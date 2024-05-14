@@ -12,7 +12,28 @@ router.get('/',  async (req, res) => {
     });
     const Customers = customerData.map((project) => project.get({ plain: true }));
 
-    res.render('product', {
+    res.render('homepage', {
+      Products,
+      Customers
+    });
+    
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
+
+router.get('/products',  async (req, res) => {
+  try {
+    const productData = await Product.findAll({
+      order: [['product_name', 'ASC']],
+    });
+    const Products = productData.map((project) => project.get({ plain: true }));
+    const customerData = await Customer.findAll({
+      order: [['customer_id', 'ASC']],
+    });
+    const Customers = customerData.map((project) => project.get({ plain: true }));
+
+    res.render('products', {
       Products,
       Customers
     });

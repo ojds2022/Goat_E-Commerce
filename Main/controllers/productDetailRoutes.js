@@ -1,8 +1,18 @@
-const router = require('express').Router();
-const { Product } = require('../models');
+// const router = require('express').Router();
+// const { Product } = require('../models');
 
-router.get('/products',  async (req, res) => {
-    res.render('product-details')
-});
+// router.get('/product/:id',  async (req, res) => {
+//     try {
+//       const productData = await Product.findByPk(req.params.id);
+//       const Products = project.get({ plain: true });
+  
+//       res.render('product-details', {
+//         Products
+//       });
+      
+//     } catch (err) {
+//       res.status(500).json(err);
+//     }
+//   });
 
-module.exports = router;
+// module.exports = router;

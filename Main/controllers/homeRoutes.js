@@ -1,6 +1,5 @@
 const router = require('express').Router();
-const { Product } = require('../models');
-const { Customer } = require('../models');
+const { Product, Customer } = require('../models');
 
 router.get('/',  async (req, res) => {
   try {
@@ -25,10 +24,8 @@ router.get('/',  async (req, res) => {
 
 router.get('/product/:id',  async (req, res) => {
   try {
-    const productData = await Product.findByPk(req.params.id, {
-      order: [['product_name', 'ASC']],
-    });
-    const Products = productData.map((project) => project.get({ plain: true }));
+    const productData = await Product.findByPk(req.params.id);
+    const Products = productData.get({ plain: true });
 
     res.render('product-details', {
       Products

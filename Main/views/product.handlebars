@@ -3,7 +3,7 @@
   <section class="flex-row justify-center">
         {{#each Products as |Product|}}
           <div class="col-sm-3 ml-1 text-center">
-            <h6><a href="/product/{{Product.id}}"><img src="{{Product.product_url}}" alt="{{Product.product_description}}" height="100" width="100"></a>
+            <h6><a href="/product/{{Product.product_id}}"><img src="{{Product.product_url}}" alt="{{Product.product_description}}" height="100" width="100"></a>
             <br>{{Product.product_name}}
             <br>${{Product.price}}</h6>
           </div>

@@ -48,8 +48,14 @@ router.get('/product/:id',  async (req, res) => {
     const productData = await Product.findByPk(req.params.id);
     const Products = productData.get({ plain: true });
 
+    const customerData = await Customer.findAll({
+      order: [['customer_id', 'ASC']],
+    });
+    const Customers = customerData.map((project) => project.get({ plain: true }));
+
     res.render('product-details', {
-      Products
+      Products,
+      Customers
     });
     
   } catch (err) {

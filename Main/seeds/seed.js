@@ -17,11 +17,11 @@ const seedDatabase = async () => {
     individualHooks: true,
     returning: true,
   });
-  await TransactionsDetail.bulkCreate(transactiondetailData, {
+  await TransactionsMain.bulkCreate(transactionmainData, {
     individualHooks: true,
     returning: true,
   });
-  await TransactionsMain.bulkCreate(transactionmainData, {
+  await TransactionsDetail.bulkCreate(transactiondetailData, {
     individualHooks: true,
     returning: true,
   });

@@ -4,9 +4,11 @@ const buyProductQuantity = async (event) => {
     const productQuantity = document.querySelector('#product-quantity').value;
 
     if (productQuantity >= 1) {
-        console.log(`button pressed with ${productQuantity}`);
+        for (let i=0; i < productQuantity; i++) {
+            
+        };
     } else {
-        console.log(`please enter a number`);
+        alert("Please enter a valid quantity.");
     }
 }
 

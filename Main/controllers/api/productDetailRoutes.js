@@ -1,15 +1,17 @@
 const router = require('express').Router();
-const { Product } = require('../models');
+const { Product } = require('../../models');
 
-router.post('/product/:id',  async (req, res) => {
-    try {
-      const productData = await Product.findByPk(req.params.id);
-      const Products = project.get({ plain: true });
-  
-      res.render('product-details', {
-        Products
+router.post('/:id',  async (req, res) => {
+    try { 
+      Product.build({
+        productName: req.body.productName,
+        productDescription: req.body.productDescription,
+        productUrl: req.body.productUrl,
+        productPrice: req.body.productPrice,
       });
-      
+      const test = await Product.findAll();
+      const testData = test.map((project) => project.get({ plain: true }))
+      console.log(testData);
     } catch (err) {
       res.status(500).json(err);
     }

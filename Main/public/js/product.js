@@ -1,21 +1,23 @@
-// const { TransactionsDetail } = require("../../models");
-
 const buyProductQuantity = async (event) => {
     event.preventDefault();
 
     const productQuantity = document.querySelector('#product-quantity').value;
+    const productName = document.querySelector('#product-name').textContent;
+    const productDescription = document.querySelector('#product-description').textContent;
+    const productImageElement = document.querySelector('#product-image');
+    const productUrl = productImageElement.getAttribute('src');
+    const productPrice = document.querySelector('#product-price').textContent.trim().replace('Cost: $', '');
 
     if (productQuantity >= 1) {
         for (let i=0; i < productQuantity; i++) {
             try {
-                const productData = await fetch('/api/products/:id', {
+                await fetch('/api/product/:id', {
                     method: 'POST',
-                    body: JSON.stringify(req.body),
+                    body: JSON.stringify({productName, productDescription, productUrl, productPrice}),
                     headers: { 'Content-Type': 'application/json' },
                 });
-                res.status(200).json(productData);
               } catch (err) {
-                res.status(400).json(err);
+                console.log('Error on loop');
               }
         };
     } else {
@@ -26,5 +28,3 @@ const buyProductQuantity = async (event) => {
 document
     .querySelector('.product-bought')
     .addEventListener('submit', buyProductQuantity);
-
-// module.exports = buyProductQuantity()

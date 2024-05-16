@@ -9,11 +9,29 @@ const sequelize = require('../config/connection');
 
 //req.session.loggedIn = true;
 
+// Login route
+router.get('/login', (req, res) => {
+  // If the customer is already logged in, redirect to the homepage
+  if (req.session.loggedIn) {
+    res.redirect('/');
+    return;
+  }
+  // Otherwise, render the 'login' template
+  res.render('login');
+});
+
+// Logout route
+router.get('/logout', (req, res) => {
+  if (!req.session.loggedIn) {
+    res.redirect('/');
+    return;
+  }
+  res.render('login');
+});
 
 router.get('/', (req, res) => {
-  res.render('login', {
-    title: 'Login'
-  });
+  res.render('productsPage', { title: 'Products', loggedIn: req.session.loggedIn }
+  );
 });
 
 router.get('/products', async (req, res) => {
@@ -25,12 +43,12 @@ router.get('/products', async (req, res) => {
     const customerData = await Customer.findAll({
       order: [['customer_id', 'ASC']],
     });
-    const Customers = customerData.map((project) => project.get({ plain: true }));
+    const customerVar = customerData.map((project) => project.get({ plain: true }));
 
   res.render('productsPage', { 
     title: 'Products',
     Products,
-    Customers 
+    customerVar 
   });
 
 } catch (err) {
@@ -47,12 +65,12 @@ router.get('/shoppingCart', async (req, res) => {
     const customerData = await Customer.findAll({
       order: [['customer_id', 'ASC']],
     });
-    const Customers = customerData.map((project) => project.get({ plain: true }));
+    const customerVar = customerData.map((project) => project.get({ plain: true }));
 
     res.render('shoppingCart', {
       title: 'Shopping Cart',
       Products,
-      Customers
+      customerVar
     });
     
   } catch (err) {
@@ -201,25 +219,6 @@ router.get('/orderDetail', async (req, res) => {
     console.log(err);
   }
 });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 module.exports = router;

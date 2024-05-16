@@ -1,13 +1,13 @@
 USE TeamGoat_db;
 
-INSERT INTO Customers (first_name, last_name, email_address, passwords,session_id)
+INSERT INTO Customers (first_name, last_name, email_address, passwords)
 VALUES 
-  ('Gagan', 'Gagan', 'gaganjitv@gmail.com', 'TeamGoat','100cxbieoyknyq3gq22nqdsl2fd50014'),
-  ('Gary', 'Wu', 'garykachunwu@gmail.com', 'TeamGoat','200cxbieoyknyq3gq22nqdsl2fd50014'),
-  ('Felix', 'Teng', 'fsmunozteng@gmail.com', 'TeamGoat','300cxbieoyknyq3gq22nqdsl2fd50014'),
-  ('Saim', 'Diaz', 'odiazstrandberg@gmail.com', 'TeamGoat','400cxbieoyknyq3gq22nqdsl2fd50014'),
-  ('Romulo', 'Apostol', 'romuloapostol@gmail.com', 'TeamGoat','500cxbieoyknyq3gq22nqdsl2fd50014'),
-  ('Yong', 'Yun', 'yongwooyun@hotmail.com', 'TeamGoat','700cxbieoyknyq3gq22nqdsl2fd50014');
+  ('Gagan', 'Gagan', 'gaganjitv@gmail.com', 'TeamGoat'),
+  ('Gary', 'Wu', 'garykachunwu@gmail.com', 'TeamGoat'),
+  ('Felix', 'Teng', 'fsmunozteng@gmail.com', 'TeamGoat'),
+  ('Saim', 'Diaz', 'odiazstrandberg@gmail.com', 'TeamGoat'),
+  ('Romulo', 'Apostol', 'romuloapostol@gmail.com', 'TeamGoat'),
+  ('Yong', 'Yun', 'yongwooyun@hotmail.com', 'TeamGoat');
 
   INSERT INTO Products (product_name, product_description, product_url, price)
 VALUES 

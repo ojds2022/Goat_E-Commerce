@@ -26,7 +26,7 @@ router.post('/', async (req, res) => {
 
 // Login
 router.post('/login', async (req, res) => {
-  console.log(req, res);
+  // console.log(req, res);
   try {
     const dbCustomerData = await Customer.findOne({ where: { email: req.body.email } });
     console.log(dbCustomerData);

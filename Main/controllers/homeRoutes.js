@@ -1,9 +1,6 @@
 const router = require('express').Router();
 const { Product } = require('../models');
 const { Customer } = require('../models');
-<<<<<<< HEAD
-// const withAuth = require('../utils/auth');
-=======
 const { truncate } = require('../models/Items');
 //adding Auth and
 const withAuth = require('../utils/auth');
@@ -12,7 +9,6 @@ const sequelize = require('../config/connection');
 
 //req.session.loggedIn = true;
 
->>>>>>> 80c37a0f92324620ef21b332d6ab9a7be1f1582a
 
 // router.get('/login', (req, res) => {
 //   res.render('login', {

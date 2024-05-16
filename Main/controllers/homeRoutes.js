@@ -92,7 +92,7 @@ router.get('/shop', async (req, res) => {
     
         COUNT(p.product_name) AS QTY
       FROM 
-        customers c
+        customer c
       JOIN 
         transactionsmains tm ON c.customer_id = tm.customer_id
       JOIN 
@@ -101,7 +101,7 @@ router.get('/shop', async (req, res) => {
         products p ON td.Product_id = p.Product_id
       GROUP BY 
         p.price, c.first_name, c.last_name, p.product_name, p.product_description
-        where customers.id = ${customerid};
+        where customer.id = ${customerid};
     `;
 
     const [results] = await sequelize.query(sqlQuery);
@@ -139,7 +139,7 @@ router.get('/ordermain', async (req, res) => {
       SUM(p.price) AS total_price,
       tm.ordered
   FROM 
-      customers c
+      customer c
   JOIN 
       transactionsmains tm ON c.customer_id = tm.customer_id
   JOIN 
@@ -186,7 +186,7 @@ router.get('/orderDetail', async (req, res) => {
 
     COUNT(p.product_name) AS QTY
   FROM 
-    customers c
+    customer c
   JOIN 
     transactionsmains tm ON c.customer_id = tm.customer_id
   JOIN 

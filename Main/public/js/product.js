@@ -1,4 +1,4 @@
-const { TransactionsDetail } = require("../../models");
+// const { TransactionsDetail } = require("../../models");
 
 const buyProductQuantity = async (event) => {
     event.preventDefault();
@@ -8,7 +8,11 @@ const buyProductQuantity = async (event) => {
     if (productQuantity >= 1) {
         for (let i=0; i < productQuantity; i++) {
             try {
-                const productData = await TransactionsDetail.create(req.body);
+                const productData = await fetch('/api/products/:id', {
+                    method: 'POST',
+                    body: JSON.stringify(req.body),
+                    headers: { 'Content-Type': 'application/json' },
+                });
                 res.status(200).json(productData);
               } catch (err) {
                 res.status(400).json(err);
@@ -23,4 +27,4 @@ document
     .querySelector('.product-bought')
     .addEventListener('submit', buyProductQuantity);
 
-module.exports = buyProductQuantity()
+// module.exports = buyProductQuantity()

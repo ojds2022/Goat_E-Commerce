@@ -1,31 +1,39 @@
-   <div class="col">
-        {{#each data as |data| }}
-            <div class="row col-sm-6">
-                <div class="col-sm-4 ml-1">
-                <h3>{{data.transaction_id}}</h3>
-              </div>
-              <div class="col-sm-4 ml-1">
-                <h3>{{data.customer_id}}</h3>
-              </div>
-              <div class="col-sm-4 ml-1">
-                <h3>{{data.first_name}}</h3>
-              </div>
-              <div class="col-sm-2 ml-1 ">
-                <h3>{{data.last_name}}</h3>
-              </div>
-              <div class="col-sm-2 ml-1 ">
-                <h3>{{data.total}}</h3>
-              </div>
-              <div class="col-sm-2 ml-1 ">
-                <h3>{{data.created_date}}</h3>
-              </div>
-              <div class="col-sm-2 ml-1 ">
-                <h3>{{data.ordered}}</h3>
-              </div>
+ <div class="container-fluid mt-5">
+    <h1 class="mb-4">Order History</h1>
+    <div class="row">
+      <div class="col-lg-10 mx-auto">
+        <div class="table-responsive">
+          <table class="table table-bordered">
+            <thead>
+              <tr>
+                <th scope="col">#</th>
+                <th scope="col">Order ID</th>
+                <th scope="col">Date</th>
+                <th scope="col">Total</th>
+                <th scope="col">Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              
+
+            {{#each data as |order| }}
+
+              <tr>
+                <th scope="row">{{@index}}</th>
+                <td>{{order.transaction_id}}</td>
+                <td>{{order.created_date}}</td>
+                <td>${{order.total}}</td>
+                <td><span class="badge badge-success">{{order.ordered}}</span></td>
+              </tr>
+
+            {{/each}}
 
 
-            </div>
-        {{/each}}
-      
+
+              
+            </tbody>
+          </table>
+        </div>
       </div>
-
+    </div>
+  </div>

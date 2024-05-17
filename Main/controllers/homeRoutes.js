@@ -91,6 +91,9 @@ router.get('/shop', async (req, res) => {
 router.get('/ordermain', async (req, res) => {
   try {
     
+    // the select is the data i beed from the models
+    // from transsacdeadil t
+    // jointranssaction main and transsaction details
     const sqlQuery = `
     SELECT
       c.first_name,

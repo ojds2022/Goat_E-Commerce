@@ -1,33 +1,59 @@
-  <div class="col">
-        {{#each data as |data| }}
-            <div class="row col-sm-6">
-                <div class="col-sm-4 ml-1">
-                <h3>{{data.transaction_id}}</h3>
-              </div>
-              <div class="col-sm-4 ml-1">
-                <h3>{{data.product_id}}</h3>
-              </div>
-              <div class="col-sm-4 ml-1">
-                <h3>{{data.product_name}}</h3>
-              </div>
-              <div class="col-sm-2 ml-1 ">
-                <h3>{{data.product_description}}</h3>
-              </div>
-              <div class="col-sm-2 ml-1 ">
-                <h3>{{data.total}}</h3>
-              </div>
-              <div class="col-sm-2 ml-1 ">
-                <h3>{{data.product_url}}</h3>
-              </div>
-              <div class="col-sm-2 ml-1 ">
-                <h3>{{data.Qty}}</h3>
-              </div>
+   <style>
+    .order-card {
+      max-width: 800px;
+      margin: 0 auto;
+
+    }
+
+    .order-image {
+      max-width: 200px;
+      height: auto;
+    }
+
+    @media (max-width: 768px) {
+      .order-image {
+        max-width: 150px;
+      }
+    }
+    .row
+    {
+        margin-bottom: 20px;
+    }
+  </style>
+ 
+ <div class="container mt-5">
+    <div class="row">
+      <div class="col-md-12">
+        <h2 class="text-center mb-4">Order History</h2>
+        <div class="card order-card mb-4">
+          <div class="card-header">
+            {{data.transaction_id}}
+          </div>
 
 
+          <div class="card-body">
+   
+
+                {{#each data as |order| }}
+
+
+                     <div class="row">
+                    <div class="col-md-4">
+                        <img src="../public/assets/jordan.jpeg" class="img-fluid order-image" alt="Order Image">
+                    </div>
+                    <div class="col-md-8">
+                        <ul class="list-group">
+                            <li class="list-group-item"><strong>Item: </strong> {{order.first_name}}</li>
+                            <li class="list-group-item"><strong>Total:</strong> ${{order.total}}</li>
+                        </ul>
+                    </div>
+                </div>
+
+
+            {{/each}}
+           
+          
             </div>
-        {{/each}}
-      
       </div>
-
-
-      
+    </div>
+  </div>

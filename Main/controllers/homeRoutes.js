@@ -13,7 +13,7 @@ const sequelize = require('../config/connection');
 router.get('/login', (req, res) => {
   // If the customer is already logged in, redirect to the homepage
   if (req.session.loggedIn) {
-    res.redirect('/');
+    res.redirect('/products');
     return;
   }
   // Otherwise, render the 'login' template
@@ -23,16 +23,21 @@ router.get('/login', (req, res) => {
 // Logout route
 router.get('/logout', (req, res) => {
   if (!req.session.loggedIn) {
-    res.redirect('/');
+    res.redirect('/products');
     return;
   }
   res.render('login');
 });
 
+// router.get('/', (req, res) => {
+//   res.redirect('productsPage', { title: 'Products', loggedIn: req.session.loggedIn }
+//   );
+// });
+
 router.get('/', (req, res) => {
-  res.render('productsPage', { title: 'Products', loggedIn: req.session.loggedIn }
-  );
+  res.redirect('/products');
 });
+
 
 router.get('/products', async (req, res) => {
   try {
@@ -48,7 +53,8 @@ router.get('/products', async (req, res) => {
   res.render('productsPage', { 
     title: 'Products',
     Products,
-    customerVar 
+    customerVar, 
+    loggedIn: req.session.loggedIn 
   });
 
 } catch (err) {

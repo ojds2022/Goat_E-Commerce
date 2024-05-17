@@ -79,7 +79,6 @@ router.get('/shoppingCart', async (req, res) => {
   }
 });
 
-
 router.get('/shop', async (req, res) => {
   try {
 

@@ -29,7 +29,6 @@ Customers.init(
       },
       session_id: {
         type: DataTypes.STRING(255),
-        allowNull: false,
       },
       created_date: {
         type: DataTypes.DATE,

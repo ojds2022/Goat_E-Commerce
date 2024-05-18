@@ -1,8 +1,7 @@
 const router = require('express').Router();
-const { Product } = require('../models');
-const { Customers } = require('../models');
+const { Product , Customers} = require('../models');
 
-//adding Auth and
+//adding Auth 
 const withAuth = require('../utils/auth');
 
 const sequelize = require('../config/connection');
@@ -48,7 +47,7 @@ router.get('/products', async (req, res) => {
     title: 'Products',
     Products,
     customerVar,
-    loggedIn: req.session.loggedIn 
+    loggedIn: req.session.loggedIn
   });
 
 } catch (err) {
@@ -65,10 +64,11 @@ router.get('/products/:id',  async (req, res) => {
       order: [['customer_id', 'ASC']],
     });
     const customerVar = customerData.map((project) => project.get({ plain: true }));
-    console.log(Products);
+
     res.render('productDetailsPage', {
       Products,
-      customerVar
+      customerVar,
+      loggedIn: req.session.loggedIn
     });
     
   } catch (err) {
@@ -76,128 +76,64 @@ router.get('/products/:id',  async (req, res) => {
   }
 });
 
+//shopping cart page
 router.get('/shoppingCart', async (req, res) => {
   try {
-    const productData = await Product.findAll({
-      order: [['product_name', 'ASC']],
-    });
-    const Products = productData.map((project) => project.get({ plain: true }));
-    const customerData = await Customers.findAll({
-      order: [['customer_id', 'ASC']],
-    });
-    const customerVar = customerData.map((project) => project.get({ plain: true }));
-
+    //raw sql data to pull values needed to display on shopping cart page
+    const sqlQuery = `
+      SELECT 
+        c.customer_id, 
+        p.product_url,
+        p.product_name,
+        p.price,
+        tm.total,
+        COUNT(p.product_name) AS QTY,
+        (SELECT SUM(p2.price) 
+          FROM products p2
+          JOIN transactionsdetails td2 ON p2.Product_id = td2.Product_id
+          JOIN transactionsmains tm2 ON td2.Transaction_id = tm2.Transaction_id
+          JOIN customers c2 ON tm2.customer_id = c2.customer_id
+          WHERE c2.customer_id = 1
+        ) AS totalPrice
+      FROM 
+        customers c
+      JOIN 
+        transactionsmains tm ON c.customer_id = tm.customer_id
+      JOIN 
+        transactionsdetails td ON tm.Transaction_id = td.Transaction_id
+      JOIN 
+        products p ON td.Product_id = p.Product_id
+      WHERE
+       c.customer_id = 1
+      GROUP BY 
+        p.price, c.customer_id,p.product_url, p.product_name, tm.total
+      
+    `;
+    //running raw sql query
+    const [results] = await sequelize.query(sqlQuery);
+    
+    //passing it as an object 
+    const serializedData = results.map((data) => ({
+      product_name: data.product_name,
+      product_url: data.product_url,
+      price: data.price,
+      quantity: data.QTY,
+      totalCost: data.price * data.QTY,
+      subtotalPrice: data.totalPrice,
+      tax: 9,
+      finalPrice: (data.totalPrice * 1.09).toFixed(2)     
+    }));
+    //passing it through to the shopping cart page
     res.render('shoppingCart', {
       title: 'Shopping Cart',
-      Products,
-      customerVar
+      data:serializedData,
+      loggedIn: req.session.loggedIn
     });
     
   } catch (err) {
     res.status(500).json(err);
   }
 });
-
-
-
-
-
-
-
-
-
-
-// New route to handle insertion into transactionmains
-
-
-
-
-
-
-router.post('/products/1', async (req, res) => {
-  const { total, customer_id, created_date, ordered, product_id, dordered } = req.body;
-
-  try {
-    // Step 1: Check if there is an existing transaction for the customer
-    const selectQuery = `
-      SELECT transaction_id 
-      FROM TransactionsMains 
-      WHERE customer_id = :customer_id AND ordered = 0 
-      ORDER BY transaction_id DESC 
-      LIMIT 1
-    `;
-
-    const [transaction] = await sequelize.query(selectQuery, {
-      replacements: { customer_id },
-      type: sequelize.QueryTypes.SELECT
-    });
-
-    let transaction_id;
-
-    if (transaction) {
-      // If record exists, get the transaction_id
-      transaction_id = transaction.transaction_id;
-    } else {
-      // If no record exists, insert a new record into TransactionsMains
-      const insertTransactionMainsQuery = `
-        INSERT INTO TransactionsMains (total, customer_id, created_date, ordered)
-        VALUES (:total, :customer_id, :created_date, :ordered)
-      `;
-
-      const result = await sequelize.query(insertTransactionMainsQuery, {
-        replacements: { total, customer_id, created_date, ordered },
-        type: sequelize.QueryTypes.INSERT
-      });
-
-      // Retrieve the transaction_id of the newly inserted record
-      const newTransaction = await sequelize.query(`
-        SELECT transaction_id 
-        FROM TransactionsMains 
-        WHERE customer_id = :customer_id 
-        ORDER BY transaction_id DESC 
-        LIMIT 1
-      `, {
-        replacements: { customer_id },
-        type: sequelize.QueryTypes.SELECT
-      });
-
-      transaction_id = newTransaction[0].transaction_id;
-    }
-
-    // Insert into TransactionsDetails
-    const insertTransactionDetailsQuery = `
-      INSERT INTO TransactionsDetails (transaction_id, product_id, ordered)
-      VALUES (:transaction_id, :product_id, :dordered)
-    `;
-
-    await sequelize.query(insertTransactionDetailsQuery, {
-      replacements: { transaction_id, product_id, dordered },
-      type: sequelize.QueryTypes.INSERT
-    });
-
-    res.json({ success: true, transaction_id });
-  } catch (err) {
-    res.status(500).json({ success: false, error: err.message });
-  }
-});
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 router.get('/ordermain', async (req, res) => {
@@ -229,8 +165,6 @@ router.get('/ordermain', async (req, res) => {
 
     const [results] = await sequelize.query(sqlQuery);
 
-    console.log(results);
-
     const serializedData = results.map((data) => ({
       transaction_id: data.transaction_id,
       created_date: data.created_date,
@@ -242,10 +176,12 @@ router.get('/ordermain', async (req, res) => {
       
     }));
 
-    res.render('orderMain', { data: serializedData });
+    res.render('orderMain', { 
+      data: serializedData,
+      loggedIn: req.session.loggedIn
+    });
   } catch (err) {
     res.status(500).json(err);
-    console.log(err);
   }
 });
 
@@ -277,8 +213,6 @@ router.get('/orderDetail/:id', async (req, res) => {
 
     const [results] = await sequelize.query(sqlQuery);
 
-    console.log(req.params.id);
-
     const serializedData = results.map((data) => ({
       transaction_id: data.transaction_id,
       product_id: data.product_id,
@@ -291,11 +225,20 @@ router.get('/orderDetail/:id', async (req, res) => {
       
     }));
 
-    res.render('orderdetail', { data: serializedData });
+    res.render('orderdetail', { 
+      data: serializedData,
+      loggedIn: req.session.loggedIn 
+    });
   } catch (err) {
     res.status(500).json(err);
-    console.log(err);
   }
 });
 
+router.get('/transactionComplete', (req,res) => {
+  
+
+  res.render('transactionComplete',{
+    loggedIn: req.session.loggedIn
+  });
+});
 module.exports = router;

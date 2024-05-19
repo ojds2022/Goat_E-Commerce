@@ -92,6 +92,7 @@ router.get('/shoppingCart', withAuth, async (req, res) => {
         p.product_name,
         p.price,
         tm.total,
+        tm.transaction_id,
         COUNT(p.product_name) AS QTY,
         (SELECT SUM(p2.price) 
           FROM products p2
@@ -111,7 +112,7 @@ router.get('/shoppingCart', withAuth, async (req, res) => {
       WHERE
         c.customer_id = ${req.session.customer_id} AND td.ordered = 0
       GROUP BY 
-        p.price, c.customer_id,p.product_url, p.product_name, tm.total
+        p.price, tm.transaction_id, c.customer_id,p.product_url, p.product_name, tm.total
       
     `;
     //running raw sql query
@@ -120,6 +121,7 @@ router.get('/shoppingCart', withAuth, async (req, res) => {
     //passing it as an object 
     const serializedData = results.map((data) => ({
       product_name: data.product_name,
+      transaction_id: data.transaction_id,
       product_url: data.product_url,
       price: parseInt(data.price).toFixed(2),
       quantity: data.QTY,
@@ -240,10 +242,48 @@ router.get('/ordermain', withAuth, async (req, res) => {
 
 
 
-router.get('/transactionComplete', withAuth, (req,res) => {
+router.get('/transactionComplete/:id', withAuth, async (req,res) => {
+  try {
+    
+    const sqlQuery = `
+    SELECT 
+    tm.transaction_id,
+    p.product_id,
+    p.product_name,
+    p.product_description,
+    sum(p.price) as total,
+    p.product_url,
+
+    COUNT(p.product_name) AS QTY
+  FROM 
+    customers c
+  JOIN 
+    transactionsmains tm ON c.customer_id = tm.customer_id
+  JOIN 
+    transactionsdetails td ON tm.Transaction_id = td.Transaction_id
+  JOIN 
+    products p ON td.Product_id = p.Product_id
+    where tm.transaction_id = ${req.params.id}
+  GROUP BY 
+     p.product_id,tm.transaction_id, p.product_name, p.product_description, p.product_url;
+    `;
+
+    const [results] = await sequelize.query(sqlQuery);
+
+    const serializedData = results.map((data) => ({
+      transaction_id: data.transaction_id,
+      total: data.total,
+           
+    }));
+
+    res.render('transactionComplete', { 
+      data: serializedData,
+      loggedIn: req.session.loggedIn 
+    });
+  } catch (err) {
+    res.status(500).json(err);
+  }
+
   
-  res.render('transactionComplete',{
-    loggedIn: req.session.loggedIn
-  });
 });
 module.exports = router;

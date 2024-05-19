@@ -5,6 +5,10 @@ const exphbs = require('express-handlebars');
 const routes = require('./controllers');
 const sequelize = require('./config/connection');
 
+//added on 5-18a
+require('./globals.js');
+//
+
 const SequelizeStore = require('connect-session-sequelize')(session.Store);
 
 const app = express();

@@ -137,7 +137,7 @@ router.get('/shoppingCart', async (req, res) => {
 
 
 router.post('/products/1', async (req, res) => {
-  const { total, customer_id, created_date, ordered, product_id, dordered } = req.body;
+  const { total, customer_id, created_date, ordered, product_id, dordered ,} = req.body;
   try {
     // Step 1: Check if there is an existing transaction for the customer
     const selectQuery = `
@@ -196,7 +196,23 @@ router.post('/products/1', async (req, res) => {
 
 
 
-router.get('/ordermain', async (req, res) => {
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+router.get('/ordermain', withAuth, async (req, res) => {
   try {
     
     const sqlQuery = `

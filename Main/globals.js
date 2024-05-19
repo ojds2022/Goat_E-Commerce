@@ -1,0 +1,1 @@
+global.customerId = 0;

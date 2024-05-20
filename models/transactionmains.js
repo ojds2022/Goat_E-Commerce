@@ -39,7 +39,7 @@ TransactionsMains.init(
       timestamps: false,
       freezeTableName: true,
       underscored: true,
-      modelName: 'transactionsmains',
+      modelName: 'transactionsMains',
     }
 )
 

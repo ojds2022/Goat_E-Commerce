@@ -38,7 +38,7 @@ TransactionsDetails.init(
       timestamps: false,
       freezeTableName: true,
       underscored: true,
-      modelName: 'transactionsdetails',
+      modelName: 'transactionsDetails',
     }
 )
 

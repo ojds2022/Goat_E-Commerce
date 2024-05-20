@@ -10,15 +10,15 @@ router.put('/complete', async (req, res) => {
         await sequelize.transaction(async (t) => {
             // Update TransactionsMains table
             await sequelize.query(`
-                UPDATE TransactionsMains
+                UPDATE transactionsMains
                 SET ordered = 1
                 WHERE ordered = 0 AND customer_id = ${req.session.customer_id};
             `, { transaction: t });
 
             // Update TransactionsDetails table
             await sequelize.query(`
-                UPDATE TransactionsDetails AS td
-                JOIN TransactionsMains AS tm ON tm.transaction_id = td.transaction_id
+                UPDATE transactionsDetails AS td
+                JOIN transactionsMains AS tm ON tm.transaction_id = td.transaction_id
                 SET td.ordered = 1
                 WHERE td.ordered = 0 AND tm.customer_id = ${req.session.customer_id};
             `, { transaction: t });

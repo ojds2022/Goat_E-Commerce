@@ -1,8 +1,5 @@
 const Sequelize = require('sequelize');
-require('dotenv').config()
-// const session = require('express-session');
-// const SequelizeStore = require('connect-session-sequelize')(session.Store);
-
+require('dotenv').config();
 
 let sequelize;
 
@@ -21,25 +18,4 @@ if (process.env.JAWSDB_URL) {
   );
 }
 
-// const sess = {
-//   secret: 'Super goat secret',
-  
-//   cookie: {
-//     maxAge: 24 * 60 * 60 * 1000,
-//     httpOnly: true,
-//     secure: false,
-//     sameSite: 'strict',
-//   },
-
-//   resave: false,
-//   saveUninitialized: true,
-//   store: new SequelizeStore({
-//     db: sequelize
-//   })
-// };
-
-// const sessionMiddleware = session(sess);
-
 module.exports = sequelize;
-
-  // ,sessionMiddleware};

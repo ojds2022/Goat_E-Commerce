@@ -12,7 +12,7 @@ router.put('/complete', async (req, res) => {
             await sequelize.query(`
                 UPDATE transactionsMains
                 SET ordered = 1
-                WHERE ordered = 0 AND custhomer_id = ${req.session.customer_id};
+                WHERE ordered = 0 AND customer_id = ${req.session.customer_id};
             `, { transaction: t });
 
             // Update TransactionsDetails table

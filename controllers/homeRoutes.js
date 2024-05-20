@@ -156,8 +156,8 @@ router.get('/orderDetail/:id', withAuth, async (req, res) => {
     COUNT(p.product_name) AS QTY,
     (SELECT SUM(p2.price) 
     FROM products p2
-    JOIN transactionsDetails td2 ON p2.Product_id = td2.Product_id
-    JOIN transactionsMains tm2 ON td2.Transaction_id = tm2.Transaction_id
+    JOIN transactionsDetails td2 ON p2.product_id = td2.product_id
+    JOIN transactionsMains tm2 ON td2.transaction_id = tm2.transaction_id
     JOIN customers c2 ON tm2.customer_id = c2.customer_id
     WHERE c2.customer_id = ${req.session.customer_id} AND td2.ordered = 1
   ) AS totalPrice
@@ -166,9 +166,9 @@ router.get('/orderDetail/:id', withAuth, async (req, res) => {
   JOIN 
     transactionsMains tm ON c.customer_id = tm.customer_id
   JOIN 
-    transactionsDetails td ON tm.Transaction_id = td.Transaction_id
+    transactionsDetails td ON tm.transaction_id = td.transaction_id
   JOIN 
-    products p ON td.Product_id = p.Product_id
+    products p ON td.product_id = p.product_id
     where tm.transaction_id = ${req.params.id}
   GROUP BY 
      p.product_id,tm.transaction_id, p.product_name, p.product_description, p.product_url;

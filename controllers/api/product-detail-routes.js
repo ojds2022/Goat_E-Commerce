@@ -8,7 +8,7 @@ router.post('/:id', async (req, res) => {
     // Step 1: Check if there is an existing transaction for the customer
     const selectQuery = `
       SELECT transaction_id
-      FROM TransactionsMains
+      FROM transactionsMains
       WHERE customer_id = :customer_id AND ordered = 0
       ORDER BY transaction_id DESC
       LIMIT 1
@@ -24,7 +24,7 @@ router.post('/:id', async (req, res) => {
     } else {
       // If no record exists, insert a new record into TransactionsMains
       const insertTransactionMainsQuery = `
-        INSERT INTO TransactionsMains (total, customer_id, created_date, ordered)
+        INSERT INTO transactionsMains (total, customer_id, created_date, ordered)
         VALUES (:total, :customer_id, :created_date, :ordered)
       `;
       const result = await sequelize.query(insertTransactionMainsQuery, {
@@ -34,7 +34,7 @@ router.post('/:id', async (req, res) => {
       // Retrieve the transaction_id of the newly inserted record
       const newTransaction = await sequelize.query(`
         SELECT transaction_id
-        FROM TransactionsMains
+        FROM transactionsMains
         WHERE customer_id = :customer_id
         ORDER BY transaction_id DESC
         LIMIT 1
@@ -46,7 +46,7 @@ router.post('/:id', async (req, res) => {
     }
     // Insert into TransactionsDetails
     const insertTransactionDetailsQuery = `
-      INSERT INTO TransactionsDetails (transaction_id, product_id, ordered)
+      INSERT INTO transactionsDetails (transaction_id, product_id, ordered)
       VALUES (:transaction_id, :product_id, :dordered)
     `;
     await sequelize.query(insertTransactionDetailsQuery, {

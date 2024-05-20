@@ -96,7 +96,7 @@ router.get('/shoppingCart', withAuth, async (req, res) => {
         (SELECT SUM(p2.price) 
           FROM products p2
           JOIN transactionsDetails td2 ON p2.Product_id = td2.Product_id
-          JOIN transactionsMains tm2 ON td2.Transaction_id = tm2.Transaction_id
+          JOIN transactionsMains tm2 ON td2.Transaction_id = tm2.transaction_id
           JOIN customers c2 ON tm2.customer_id = c2.customer_id
           WHERE c2.customer_id = ${req.session.customer_id} AND td2.ordered = 0
         ) AS totalPrice
@@ -105,7 +105,7 @@ router.get('/shoppingCart', withAuth, async (req, res) => {
       JOIN 
         transactionsMains tm ON c.customer_id = tm.customer_id
       JOIN 
-        transactionsDetails td ON tm.Transaction_id = td.Transaction_id
+        transactionsDetails td ON tm.transaction_id = td.Transaction_id
       JOIN 
         products p ON td.Product_id = p.Product_id
       WHERE

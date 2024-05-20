@@ -18,7 +18,7 @@ router.put('/complete', async (req, res) => {
             // Update TransactionsDetails table
             await sequelize.query(`
                 UPDATE transactionsDetails AS td
-                JOIN transactionsMains AS tm ON tm.transaction_id = td.transaction_id
+                JOIN transactionsMains AS tm ON tm.transaction_id = td.Transaction_id
                 SET td.ordered = 1
                 WHERE td.ordered = 0 AND tm.customer_id = ${req.session.customer_id};
             `, { transaction: t });

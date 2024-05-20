@@ -189,7 +189,7 @@ router.get('/orderDetail/:id', withAuth, async (req, res) => {
       singlePrice: data.total / data.QTY            
     }));
 
-    res.render('orderdetail', { 
+    res.render('orderDetail', { 
       data: serializedData,
       loggedIn: req.session.loggedIn 
     });

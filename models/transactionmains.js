@@ -1,31 +1,32 @@
 const { Model, DataTypes } = require('sequelize');
 const sequelize = require('../config/connection');
 
-class TransactionsDetails extends Model {};
+class TransactionsMains extends Model {};
 
-TransactionsDetails.init(
+TransactionsMains.init(
     {
-      id: {
+      transaction_id: {
         type: DataTypes.INTEGER,
         allowNull: false,
         primaryKey: true,
-        autoIncrement: true
+        autoIncrement: true,
       },
-      Transaction_id: {
+      total: {
+        type: DataTypes.DECIMAL(10, 2),
+        allowNull: false
+      },
+      customer_id: {
         type: DataTypes.INTEGER,
         allowNull: false,
         references: {
-          model: 'transactionsMains',
-          key: 'id'
-        }
+          model: 'customers',
+          key: 'customer_id',
+        },
       },
-      Product_id: {
-        type: DataTypes.INTEGER,
-        allowNull: false,
-        references: {
-          model: 'products',
-          key: 'id'
-        }
+      created_date: {
+        type: DataTypes.DATE,
+        defaultValue: DataTypes.NOW,
+        allowNull: false
       },
       ordered: {
         type: DataTypes.BOOLEAN,
@@ -38,8 +39,8 @@ TransactionsDetails.init(
       timestamps: false,
       freezeTableName: true,
       underscored: true,
-      modelName: 'transactionsDetails',
+      modelName: 'transactionsmains',
     }
 )
 
-module.exports = TransactionsDetails;
+module.exports = TransactionsMains;

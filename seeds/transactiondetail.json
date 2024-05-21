@@ -9,7 +9,6 @@
         "Product_id": "3", 
         "ordered":  "1"
     },
-  
     {
         "Transaction_id": "1", 
         "Product_id": "4", 
@@ -26,8 +25,4 @@
         "ordered":  "0"
     }
   
-  
-
-
-
 ]

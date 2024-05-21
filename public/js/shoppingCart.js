@@ -1,9 +1,9 @@
 document
-.querySelector('#backToProduct')
-.addEventListener("click", function(event) {
-event.preventDefault();
-document.location.replace('/products');
-});
+    .querySelector('#backToProduct')
+    .addEventListener("click", function(event) {
+        event.preventDefault();
+        document.location.replace('/products');
+    });
 
 
 document.querySelector('#transaction').addEventListener("click", async function() {

@@ -12,7 +12,7 @@ TransactionsMain.belongsTo(Customers, {
     foreignKey: 'customer_id',
 });
 
-TransactionsMain.hasOne(TransactionsDetail, {
+TransactionsMain.hasMany(TransactionsDetail, {
     foreignKey: 'transaction_id',
     onDelete: 'CASCADE'
 });
@@ -21,7 +21,7 @@ TransactionsDetail.belongsTo(TransactionsMain, {
     foreignKey: 'transaction_id',
 });
 
-Product.hasOne(TransactionsDetail, {
+Product.hasMany(TransactionsDetail, {
     foreignKey: 'product_id',
     onDelete: 'CASCADE'
 });

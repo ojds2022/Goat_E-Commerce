@@ -1,29 +1,18 @@
-
-$(document).ready(function($) {
-    $(".btn-dark").click(function() {
-        window.location = $(this).data("href");
-    });
-});
-
-
-
 document
-.querySelector('#backToProduct')
-.addEventListener("click", function(event) {
-event.preventDefault();
-document.location.replace('/products');
-});
-
-document
-.querySelector('#transaction')
-.addEventListener("click", async () => {
-try {
-    await fetch('/api/transaction/complete', {
-        method: 'PUT',
+    .querySelector('#backToProduct')
+    .addEventListener("click", function(event) {
+        event.preventDefault();
+        document.location.replace('/products');
     });
-  } catch (err) {
-    console.log('Error on POST');
-}
 
 
+document.querySelector('#transaction').addEventListener("click", async function() {
+    try {
+        await fetch('/api/transaction/complete', {
+            method: 'PUT',
+        });
+        document.location.replace(`/transactionComplete/${$(this).data("id")}`);
+    } catch (err) {
+        console.log('Error on POST');
+    }
 });

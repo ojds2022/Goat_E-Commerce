@@ -95,17 +95,17 @@ router.get('/shoppingCart', withAuth, async (req, res) => {
         COUNT(p.product_name) AS QTY,
         (SELECT SUM(p2.price) 
           FROM products p2
-          JOIN transactionsdetails td2 ON p2.Product_id = td2.Product_id
-          JOIN transactionsmains tm2 ON td2.Transaction_id = tm2.Transaction_id
+          JOIN transactionsDetails td2 ON p2.Product_id = td2.Product_id
+          JOIN transactionsMains tm2 ON td2.Transaction_id = tm2.transaction_id
           JOIN customers c2 ON tm2.customer_id = c2.customer_id
           WHERE c2.customer_id = ${req.session.customer_id} AND td2.ordered = 0
         ) AS totalPrice
       FROM 
         customers c
       JOIN 
-        transactionsmains tm ON c.customer_id = tm.customer_id
+        transactionsMains tm ON c.customer_id = tm.customer_id
       JOIN 
-        transactionsdetails td ON tm.Transaction_id = td.Transaction_id
+        transactionsDetails td ON tm.transaction_id = td.Transaction_id
       JOIN 
         products p ON td.Product_id = p.Product_id
       WHERE
@@ -155,21 +155,22 @@ router.get('/orderDetail/:id', withAuth, async (req, res) => {
 
     COUNT(p.product_name) AS QTY,
     (SELECT SUM(p2.price) 
-    FROM products p2
-    JOIN transactionsdetails td2 ON p2.Product_id = td2.Product_id
-    JOIN transactionsmains tm2 ON td2.Transaction_id = tm2.Transaction_id
-    JOIN customers c2 ON tm2.customer_id = c2.customer_id
-    WHERE c2.customer_id = ${req.session.customer_id} AND td2.ordered = 1
-  ) AS totalPrice
+      FROM products p2
+      JOIN transactionsDetails td2 ON p2.product_id = td2.product_id
+      JOIN transactionsMains tm2 ON td2.Transaction_id = tm2.transaction_id
+      JOIN customers c2 ON tm2.customer_id = c2.customer_id
+      WHERE c2.customer_id = ${req.session.customer_id} AND td2.ordered = 1
+    ) AS totalPrice
   FROM 
     customers c
   JOIN 
-    transactionsmains tm ON c.customer_id = tm.customer_id
+    transactionsMains tm ON c.customer_id = tm.customer_id
   JOIN 
-    transactionsdetails td ON tm.Transaction_id = td.Transaction_id
+    transactionsDetails td ON tm.transaction_id = td.Transaction_id
   JOIN 
-    products p ON td.Product_id = p.Product_id
-    where tm.transaction_id = ${req.params.id}
+    products p ON td.product_id = p.product_id
+  WHERE 
+    tm.transaction_id = ${req.params.id}
   GROUP BY 
      p.product_id,tm.transaction_id, p.product_name, p.product_description, p.product_url;
     `;
@@ -188,7 +189,7 @@ router.get('/orderDetail/:id', withAuth, async (req, res) => {
       singlePrice: data.total / data.QTY            
     }));
 
-    res.render('orderdetail', { 
+    res.render('orderDetail', { 
       data: serializedData,
       loggedIn: req.session.loggedIn 
     });
@@ -196,6 +197,7 @@ router.get('/orderDetail/:id', withAuth, async (req, res) => {
     res.status(500).json(err);
   }
 });
+
 router.get('/ordermain', withAuth, async (req, res) => {
   try {
     
@@ -213,9 +215,9 @@ router.get('/ordermain', withAuth, async (req, res) => {
   FROM 
       customers c
   JOIN 
-      transactionsmains tm ON c.customer_id = tm.customer_id
+      transactionsMains tm ON c.customer_id = tm.customer_id
   JOIN 
-      transactionsdetails td ON tm.transaction_id = td.transaction_id
+      transactionsDetails td ON tm.transaction_id = td.Transaction_id
   JOIN 
       products p ON td.product_id = p.product_id
 
@@ -260,9 +262,9 @@ router.get('/transactionComplete/:id', withAuth, async (req,res) => {
       FROM 
         customers c
       JOIN 
-        transactionsmains tm ON c.customer_id = tm.customer_id
+        transactionsMains tm ON c.customer_id = tm.customer_id
       JOIN 
-        transactionsdetails td ON tm.Transaction_id = td.Transaction_id
+        transactionsDetails td ON tm.transaction_id = td.Transaction_id
       JOIN 
         products p ON td.Product_id = p.Product_id
         
